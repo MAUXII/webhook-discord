@@ -8,8 +8,8 @@ import toast from 'react-hot-toast';
 
 const createUserFormSchema = z.object({
   name: z.string()
-    .min(1, "Você precisa colocar um nome")
-    .regex(/^[A-Za-zÀ-Öø-Ø-öÿ\s]+$/
+    .nonempty("Você precisa colocar um nome")
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
     , "Apenas Letras são permitidas")
     .min(3, "O nome deve ter pelo menos 3 caracteres")
     .max(50, "O nome deve ter no máximo 50 caracteres"),
