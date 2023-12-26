@@ -9,9 +9,10 @@ import toast from 'react-hot-toast';
 const createUserFormSchema = z.object({
   name: z.string()
     .nonempty("Você precisa colocar um nome")
-    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
     , "Apenas Letras são permitidas")
-    .min(3, "O nome deve ter pelo menos 3 caracteres"),
+    .min(3, "O nome deve ter pelo menos 3 caracteres")
+    .max(50, "O nome deve ter no máximo 50 caracteres"),
     
   email: z.string()
     .min(1,"Email é um campo obrigatório")
@@ -20,7 +21,8 @@ const createUserFormSchema = z.object({
 
   subject: z.string()
     .min(1,"É necessário algum assunto")
-    .min(10, "O assunto deve ter pelo menos 10 caracteres"),
+    .min(10, "O assunto deve ter pelo menos 10 caracteres")
+    .max(600, "O Assunto deve ter no máximo 600 caracteres"),
 })
 
 
@@ -66,7 +68,7 @@ createUserFormSchema.safeParse('test'); // => { success: false; error: ZodError 
                 <input {...register("email")} type="text" placeholder="Email" className=" w-full p-3 bg-transparent border rounded-sm border-slate-700 placeholder-tailwind-slate-300 outline-none text-sm focus:ring-1 ring-indigo-600"></input>
 
                 {errors.subject && <span className='text-sm text-red-500 items-start w-full font-light'>{errors.subject.message}</span>}
-                <textarea {...register("subject")} maxLength={800} placeholder="Assunto" className=" w-full p-3 bg-transparent border rounded-sm border-slate-700 placeholder-tailwind-slate-300 outline-none text-sm h-40 resize-none scrollbar-style focus:ring-1 ring-indigo-600"></textarea>
+                <textarea {...register("subject")} maxLength={600} placeholder="Assunto" className=" w-full p-3 bg-transparent border rounded-sm border-slate-700 placeholder-tailwind-slate-300 outline-none text-sm h-40 resize-none scrollbar-style focus:ring-1 ring-indigo-600"></textarea>
                 <div>
             <button type="submit" className=' hover:bg-indigo-900 mt-4 flex px-6 py-3 bg-indigo-700 w-full mx-auto rounded-md text-center justify-center content-center' disabled={isSubmitting}>{isSubmitting ? 'Enviando...' : `Enviar Mensagem`}</button>
             </div>
